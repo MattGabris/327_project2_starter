@@ -36,8 +36,8 @@ int nextOpenSlot = 0;
 //TODO define all functions in header file
 
 //zero out array that tracks words and their occurrences
-void clearArray(){
-	for (int i = 0; i < nextOpenSlot; i++){
+void clearArray() {
+	for (int i = 0; i < nextOpenSlot; i++) {
 		wordArray[i].word = "";
 		wordArray[i].count = 0;
 	}
@@ -49,65 +49,63 @@ int getArraySize() {
 }
 
 //get data at a particular location (The word itself at index i)
-std::string getArrayWordAt(int i){
+std::string getArrayWordAt(int i) {
 	return wordArray[i].word;
 }
 
 //get data at a particular location (How many of the word at index i)
-int getArrayWord_NumbOccur_At(int i){
+int getArrayWord_NumbOccur_At(int i) {
 	return wordArray[i].count;
 }
 
-// ------------------------------ FILE I/O ------------------------------
+// ---------------------------------------- FILE I/O ----------------------------------------
+
+/*Keep track of how many times each token seen*/
+void processToken(std::string &token) {
+	if (nextOpenSlot == 0) {
+		wordArray[0].word = token;
+		wordArray[0].count++;
+		nextOpenSlot++;
+	}
+	for (int i = 0; i < nextOpenSlot; i++){
+		if (token == wordArray[i].word){
+			wordArray[i].count++;
+		}
+		else if (i == nextOpenSlot--){
+			wordArray[nextOpenSlot].word = token;
+			wordArray[nextOpenSlot].count++;
+			nextOpenSlot++;
+		}
+	}
+}
+
+/*take 1 line and extract all the tokens from it
+ feed each token to processToken for recording*/
+void processLine(std::string &myString) {
+	std::istringstream ss(myString);
+	while (std::getline(ss, myString, ' ') || std::getline(ss, myString, ',')
+			|| std::getline(ss, myString, '.')
+			|| std::getline(ss, myString, '!')) {
+		processToken(myString);
+	}
+}
 
 /*loop through whole file, one line at a time
  * call processLine on each line
  * returns false: myfstream is not open
  *         true: otherwise*/
-bool processFile(std::fstream &myfstream){
-	if (myfstream.is_open() != true){
+// ----- This was a helpful guide for learning how to properly import lines from files
+// ----- https://www.systutorials.com/241686/how-to-process-a-file-line-by-line-in-c/
+bool processFile(std::fstream &myfstream) {
+	if (myfstream.is_open() != true) {
 		return false;
+	}
+	string str;
+	while (std::getline(myfstream, str, '\n')){
+		processLine(str);
 	}
 	return true;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
