@@ -139,7 +139,10 @@ int writeArraytoFile(const std::string &outputfilename) {
 	if (nextOpenSlot == 0) {							// Checking if there's any information in the array
 		return constants::FAIL_NO_ARRAY_DATA;
 	}
-
+	for (int i = 0; i < nextOpenSlot; i++){
+		myFile << wordArray[i].word << ' ' << wordArray[i].count << '\n';	// Output to the file -> "WORD_#"
+	}
+	closeFile(myFile);
 	return constants::SUCCESS;
 }
 
