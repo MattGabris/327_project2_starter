@@ -175,7 +175,10 @@ void sortArray(constants::sortOrder so){
 				}
 				tempMax--;
 			}
-			wordArray = sortedArray;
+			for (int i = 0; i < nextOpenSlot; i++){
+				wordArray[i].word = sortedArray[i].word;
+				wordArray[i].count = sortedArray[i].count;
+			}
 		}
 		if (so == constants::DESCENDING){			// ----- Sort by reverse alphabetic order
 			int tempMax = nextOpenSlot;
@@ -197,7 +200,10 @@ void sortArray(constants::sortOrder so){
 				}
 				tempMax--;
 			}
-			wordArray = sortedArray;
+			for (int i = 0; i < nextOpenSlot; i++){
+				wordArray[i].word = sortedArray[i].word;
+				wordArray[i].count = sortedArray[i].count;
+			}
 		}
 		if (so == constants::NUMBER_OCCURRENCES){	// ----- Sort by number of occurences
 			int tempMax = nextOpenSlot;
@@ -219,7 +225,10 @@ void sortArray(constants::sortOrder so){
 				}
 				tempMax--;
 			}
-			wordArray = sortedArray;
+			for (int i = 0; i < nextOpenSlot; i++){
+				wordArray[i].word = sortedArray[i].word;
+				wordArray[i].count = sortedArray[i].count;
+			}
 		}
 	}
 }
