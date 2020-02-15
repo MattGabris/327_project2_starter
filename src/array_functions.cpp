@@ -14,6 +14,7 @@
 #include <string>
 
 #include "constants.h"
+#include "utilities.h"
 //============================================================================
 //	stuff you will need
 //============================================================================
@@ -29,7 +30,7 @@ typedef struct wordStruct {
 	int count;
 } wordStruct;
 
-wordStruct wordArray[100];
+wordStruct wordArray[constants::MAX_WORDS];
 
 int nextOpenSlot = 0;
 
@@ -68,6 +69,7 @@ void processToken(std::string &token) {
 		nextOpenSlot++;
 	}
 	for (int i = 0; i < nextOpenSlot; i++){
+		token = strip_unwanted_chars(token); // ----- This line SHOULD eliminate the unwanted chars like a delimiter
 		if (token == wordArray[i].word){
 			wordArray[i].count++;
 		}
@@ -82,11 +84,10 @@ void processToken(std::string &token) {
 /*take 1 line and extract all the tokens from it
  feed each token to processToken for recording*/
 void processLine(std::string &myString) {
-	std::istringstream ss(myString);
-	while (std::getline(ss, myString, ' ') || std::getline(ss, myString, ',')
-			|| std::getline(ss, myString, '.')
-			|| std::getline(ss, myString, '!')) {
-		processToken(myString);
+	std::stringstream ss(myString);
+	string tempTok;
+	while (std::getline(ss, tempTok, constants::CHAR_TO_SEARCH_FOR)) {
+		processToken(tempTok);
 	}
 }
 
@@ -120,6 +121,23 @@ void closeFile(std::fstream &myfile){
 	if (myfile.is_open() == true){
 		myfile.close();
 	}
+}
+
+/* serializes all content in myEntryArray to file outputfilename
+ * returns  FAIL_FILE_DID_NOT_OPEN if cannot open outputfilename
+ * 			FAIL_NO_ARRAY_DATA if there are 0 entries in myEntryArray
+ * 			SUCCESS if all data is written and outputfilename closes OK
+ * */
+int writeArraytoFile(const std::string &outputfilename){
+	if (openFile == false){ // ----- Not sure if this is what is wanted??? Keeping it because it seems right and is checking for a bool
+		return constants::FAIL_FILE_DID_NOT_OPEN;
+	}
+	if (nextOpenSlot == 0){
+		return constants::FAIL_NO_ARRAY_DATA;
+	}
+
+
+	return constants::SUCCESS;
 }
 
 
