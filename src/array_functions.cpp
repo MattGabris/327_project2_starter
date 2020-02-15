@@ -150,17 +150,76 @@ int writeArraytoFile(const std::string &outputfilename) {
  * Sort myEntryArray based on so enum value.
  * The presence of the enum implies a switch statement
  */
+// ----- This is a good definition of how '<, >, ==' compare strings (by their ASCII values
+// ----- https://stackoverflow.com/questions/13829434/using-the-less-than-comparison-operator-for-strings
 void sortArray(constants::sortOrder so){
 	if (so != constants::NONE){ // ----- So long as the list is to be sorted, pass through
 		wordStruct sortedArray[constants::MAX_WORDS];	// ----- Make a new template array
-		if (so == constants::NUMBER_OCCURRENCES){	// ----- Sort by number of occurences
-
-		}
 		if (so == constants::ASCENDING){ 			// ----- Sort by alphabetical order
-
+			int tempMax = nextOpenSlot;
+			for (int i = 0; i < tempMax; i++){
+				string minWord = wordArray[0].word;
+				int minCount;
+				int delThisIndex;
+				for (int j = 1; j < tempMax; j++){
+					if (wordArray[j].word < minWord){
+						minWord = wordArray[j].word;
+						minCount = wordArray[j].count;
+						delThisIndex = j;
+					}
+				}
+				sortedArray[i].word = minWord;
+				sortedArray[i].count = minCount;
+				for (int x = delThisIndex; x < tempMax - 1; x++){ // Maybe not a '- 1'
+					wordArray[x] = wordArray[x+1];
+				}
+				tempMax--;
+			}
+			wordArray = sortedArray;
 		}
 		if (so == constants::DESCENDING){			// ----- Sort by reverse alphabetic order
-
+			int tempMax = nextOpenSlot;
+			for (int i = 0; i < tempMax; i++){
+				string maxWord = wordArray[0].word;
+				int maxCount;
+				int delThisIndex;
+				for (int j = 1; j < tempMax; j++){
+					if (wordArray[j].word > maxWord){
+						maxWord = wordArray[j].word;
+						maxCount = wordArray[j].count;
+						delThisIndex = j;
+					}
+				}
+				sortedArray[i].word = maxWord;
+				sortedArray[i].count = maxCount;
+				for (int x = delThisIndex; x < tempMax - 1; x++){ // Maybe not a '- 1'
+					wordArray[x] = wordArray[x+1];
+				}
+				tempMax--;
+			}
+			wordArray = sortedArray;
+		}
+		if (so == constants::NUMBER_OCCURRENCES){	// ----- Sort by number of occurences
+			int tempMax = nextOpenSlot;
+			for (int i = 0; i < tempMax; i++){
+				string minWord;
+				int minCount = wordArray[0].count;
+				int delThisIndex;
+				for (int j = 1; j < tempMax; j++){
+					if (wordArray[j].word < minWord){
+						minWord = wordArray[j].word;
+						minCount = wordArray[j].count;
+						delThisIndex = j;
+					}
+				}
+				sortedArray[i].word = minWord;
+				sortedArray[i].count = minCount;
+				for (int x = delThisIndex; x < tempMax - 1; x++){ // Maybe not a '- 1'
+					wordArray[x] = wordArray[x+1];
+				}
+				tempMax--;
+			}
+			wordArray = sortedArray;
 		}
 	}
 }
