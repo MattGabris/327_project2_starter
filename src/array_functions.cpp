@@ -151,7 +151,18 @@ int writeArraytoFile(const std::string &outputfilename) {
  * The presence of the enum implies a switch statement
  */
 void sortArray(constants::sortOrder so){
+	if (so != constants::NONE){ // ----- So long as the list is to be sorted, pass through
+		wordStruct sortedArray[constants::MAX_WORDS];	// ----- Make a new template array
+		if (so == constants::NUMBER_OCCURRENCES){	// ----- Sort by number of occurences
 
+		}
+		if (so == constants::ASCENDING){ 			// ----- Sort by alphabetical order
+
+		}
+		if (so == constants::DESCENDING){			// ----- Sort by reverse alphabetic order
+
+		}
+	}
 }
 
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
