@@ -111,7 +111,9 @@ bool processFile(std::fstream &myfstream) {
  in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream &myfile, const std::string &myFileName,
 		std::ios_base::openmode mode = std::ios_base::in) {
-	myfile.open(myFileName);
+	// fstream myfile
+
+	myfile.open(myFileName.c_str(), mode);
 	return true;
 }
 
@@ -128,10 +130,13 @@ void closeFile(std::fstream &myfile) {
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
 int writeArraytoFile(const std::string &outputfilename) {
-//	if (openFile == false) { // ----- Not sure if this is what is wanted??? Keeping it because it seems right and is checking for a bool
-//		return constants::FAIL_FILE_DID_NOT_OPEN;
-//	}
-	if (nextOpenSlot == 0) {
+	//string outputfilename = "ArbitraryFileName.txt";
+	std::fstream myFile;
+	openFile(myFile,outputfilename, std::ios_base::in); // Opening the file
+	if (myFile.is_open() == false) { 					// Checking if the file opened
+		return constants::FAIL_FILE_DID_NOT_OPEN;
+	}
+	if (nextOpenSlot == 0) {							// Checking if there's any information in the array
 		return constants::FAIL_NO_ARRAY_DATA;
 	}
 
