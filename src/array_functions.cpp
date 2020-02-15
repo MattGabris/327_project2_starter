@@ -68,12 +68,11 @@ void processToken(std::string &token) {
 		wordArray[0].count++;
 		nextOpenSlot++;
 	}
-	for (int i = 0; i < nextOpenSlot; i++){
+	for (int i = 0; i < nextOpenSlot; i++) {
 		token = strip_unwanted_chars(token); // ----- This line SHOULD eliminate the unwanted chars like a delimiter
-		if (token == wordArray[i].word){
+		if (token == wordArray[i].word) {
 			wordArray[i].count++;
-		}
-		else if (i == nextOpenSlot--){
+		} else if (i == nextOpenSlot--) {
 			wordArray[nextOpenSlot].word = token;
 			wordArray[nextOpenSlot].count++;
 			nextOpenSlot++;
@@ -102,23 +101,23 @@ bool processFile(std::fstream &myfstream) {
 		return false;
 	}
 	string str;
-	while (std::getline(myfstream, str, '\n')){
+	while (std::getline(myfstream, str, '\n')) {
 		processLine(str);
 	}
 	return true;
 }
 
 /*if you are debugging the file must be in the project parent directory
-  in this case Project2 with the .project and .cProject files*/
-bool openFile(std::fstream& myfile, const std::string& myFileName,
-		std::ios_base::openmode mode = std::ios_base::in){
+ in this case Project2 with the .project and .cProject files*/
+bool openFile(std::fstream &myfile, const std::string &myFileName,
+		std::ios_base::openmode mode = std::ios_base::in) {
 	myfile.open(myFileName);
 	return true;
 }
 
 /*iff myfile is open then close it*/
-void closeFile(std::fstream &myfile){
-	if (myfile.is_open() == true){
+void closeFile(std::fstream &myfile) {
+	if (myfile.is_open() == true) {
 		myfile.close();
 	}
 }
@@ -128,19 +127,24 @@ void closeFile(std::fstream &myfile){
  * 			FAIL_NO_ARRAY_DATA if there are 0 entries in myEntryArray
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
-int writeArraytoFile(const std::string &outputfilename){
-	if (openFile == false){ // ----- Not sure if this is what is wanted??? Keeping it because it seems right and is checking for a bool
-		return constants::FAIL_FILE_DID_NOT_OPEN;
-	}
-	if (nextOpenSlot == 0){
+int writeArraytoFile(const std::string &outputfilename) {
+//	if (openFile == false) { // ----- Not sure if this is what is wanted??? Keeping it because it seems right and is checking for a bool
+//		return constants::FAIL_FILE_DID_NOT_OPEN;
+//	}
+	if (nextOpenSlot == 0) {
 		return constants::FAIL_NO_ARRAY_DATA;
 	}
-
 
 	return constants::SUCCESS;
 }
 
+/*
+ * Sort myEntryArray based on so enum value.
+ * The presence of the enum implies a switch statement
+ */
+void sortArray(constants::sortOrder so){
 
+}
 
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 
