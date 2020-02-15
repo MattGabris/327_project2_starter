@@ -107,5 +107,22 @@ bool processFile(std::fstream &myfstream) {
 	return true;
 }
 
+/*if you are debugging the file must be in the project parent directory
+  in this case Project2 with the .project and .cProject files*/
+bool openFile(std::fstream& myfile, const std::string& myFileName,
+		std::ios_base::openmode mode = std::ios_base::in){
+	myfile.open(myFileName);
+	return true;
+}
+
+/*iff myfile is open then close it*/
+void closeFile(std::fstream &myfile){
+	if (myfile.is_open() == true){
+		myfile.close();
+	}
+}
+
+
+
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 
